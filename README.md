@@ -9,11 +9,11 @@ Figure 1: Visualization of the learning and planning framework presented in [2] 
 
 FD-BLP-Plan
 
-iii) includes parsers for domain files that read in pseudo-boolean expressions of form: sum<sub>1..i..n</sub> x<sub>i</sub> <= k. See translation folder for more details.
+i) includes parsers for domain files that read in pseudo-boolean expressions of form: sum<sub>1..i..n</sub> x<sub>i</sub> <= k. See translation folder for more details.
 
-iv) handles reward functions.
+ii) handles reward functions.
 
-v) can make use of known transition functions (i.e., the transition function for a subset of state variables can be provided as input - see Inventory Control example).
+iii) can make use of known transition functions (i.e., the transition function for a subset of state variables can be provided as input - see Inventory Control example).
 
 ## Dependencies
 
