@@ -21,11 +21,9 @@ i) Data collection (input to training BNN [4]): Data is collected using the RDDL
 
 ii) Training BNN: The toolkit [7] is used to train BNNs. The final training parameters were recorded into bnn.txt and normalization.txt files.
 
-iii) The toolkit [8] is called in fd_blp_plan.py to get commandline arguments.
+iii) Solver: Any off-the-shelf BLP solver works. In our paper [1], we used CPLEX solver [5].
 
-iv) Solver: Any off-the-shelf BLP solver works. In our paper [1], we used CPLEX solver [5].
-
-For i) any domain simulator and for ii) any BNN training toolkit works. Example bnn.txt, normalization.txt and domain files (under translation folder) are provided for navigation, inventory and sysadmin domains. Therefore to run the planner, you will only need iii) iv).
+For i) any domain simulator and for ii) any BNN training toolkit works. Example bnn.txt, normalization.txt and domain files (under translation folder) are provided for navigation, inventory and sysadmin domains. Therefore to run the planner, you will only need iii).
 
 ## Running FD-BLP-Plan
 
@@ -61,5 +59,3 @@ If you are using FD-BLP-Plan, please cite the papers [1,2].
 [6] Scott Sanner. Relational dynamic influence diagram language (rddl): Language description. 2010.
 
 [7] Matthieu Courbariaux. BinaryNet. https://github.com/MatthieuCourbariaux/BinaryNet
-
-[8] Christian Muise. KRRT: Knowledge Representation and Reasoning Toolkit. https://bitbucket.org/haz/krtoolkit/wiki/Home
