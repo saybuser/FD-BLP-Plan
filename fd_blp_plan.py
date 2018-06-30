@@ -1,5 +1,3 @@
-from krrt.utils import get_opts
-
 import math
 
 import cplex
@@ -471,9 +469,22 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
 
     return
 
+def get_args():
+
+    import sys
+    argv = sys.argv
+    
+    myargs = {}
+
+    for index, arg in enumerate(argv):
+        if arg[0] == '-':
+            myargs[arg] = argv[index+1]
+
+    return myargs
+
 if __name__ == '__main__':
-    #import os
-    myargs, flags = get_opts()
+    
+    myargs = get_args()
     
     setDomain = False
     setInstance = False
