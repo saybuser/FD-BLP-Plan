@@ -1,0 +1,5 @@
+~month_bit_1,month_bit_0,month_bit_1',>=,1
+month_bit_1,~month_bit_0,month_bit_1',>=,1
+~month_bit_1',month_bit_1,month_bit_0,>=,1
+~month_bit_1',~month_bit_1,~month_bit_0,>=,1
+month_bit_0',month_bit_0,==,1

@@ -1,0 +1,2 @@
+robot-at[$x21| $y6],robot-at[$x21| $y12],robot-at[$x21| $y15],robot-at[$x21| $y20],robot-at[$x21| $y25],robot-at[$x14| $y6],robot-at[$x14| $y12],robot-at[$x14| $y15],robot-at[$x14| $y20],robot-at[$x14| $y25],robot-at[$x9| $y6],robot-at[$x9| $y12],robot-at[$x9| $y15],robot-at[$x9| $y20],robot-at[$x9| $y25],robot-at[$x6| $y6],robot-at[$x6| $y12],robot-at[$x6| $y15],robot-at[$x6| $y20],robot-at[$x6| $y25],robot-at[$x3| $y6],robot-at[$x3| $y12],robot-at[$x3| $y15],robot-at[$x3| $y20],robot-at[$x3| $y25],==,1
+move-north,move-south,move-west,move-east,<=,1

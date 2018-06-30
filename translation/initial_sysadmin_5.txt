@@ -1,0 +1,5 @@
+running[$c1],==,1
+running[$c2],==,1
+running[$c3],==,1
+running[$c4],==,1
+running[$c5],==,1
