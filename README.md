@@ -39,7 +39,7 @@ FD-BLP-Plan can also be used to verify different properties of BNNs by setting h
 
 i) Input files in translation folder only accepts pseudo-boolean constraints/expressions in the form of: sum<sub>1..i..n</sub> x<sub>i</sub> ? k where ? can be <=, >= or ==.
 
-ii) Reward currently accepts weighted unit costs (1 and/or -1).
+ii) Reward currently accepts weighted unit costs (1 and/or -1 per variable).
 
 ## Citation
 
