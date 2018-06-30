@@ -466,9 +466,9 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
     
     if solution.get_status() == solution.status.MIP_optimal:
         if optimize == "True":
-            print("An optimal plan w.r.t. given BNN is found:")
+            print("An optimal plan w.r.t. the given BNN is found:")
         else:
-            print("A plan w.r.t. given BNN is found:")
+            print("A plan w.r.t. the given BNN is found:")
         
         solX = solution.get_values()
         for t in range(horizon):
@@ -476,7 +476,7 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
                 if(solX[x[(a,t)]] + 0.000001 >= 1.0):
                     print("%s at time: %d" % (a,t))
     elif solution.get_status() == solution.status.MIP_infeasible:
-        print("No plans w.r.t. learned BNN exists.")
+        print("No plans w.r.t. the given BNN exists.")
     else:
         print("Planning is interrupted. See the status message: %d" % solution.get_status())
 
