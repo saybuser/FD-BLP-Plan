@@ -466,7 +466,7 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
     
     if solution.get_status() == solution.status.MIP_optimal:
         if optimize == "True":
-            print("An optimal Plan w.r.t. given BNN is found:")
+            print("An optimal plan w.r.t. given BNN is found:")
         else:
             print("A plan w.r.t. given BNN is found:")
         
