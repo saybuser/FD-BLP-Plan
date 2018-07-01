@@ -1,1 +1,1 @@
-threshold_met[$c1]
+threshold_met[$c1],1
