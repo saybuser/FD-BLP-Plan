@@ -98,9 +98,10 @@ def readReward(directory):
     
     reward = []
     rewardFile = open(directory,"r")
-    data = rewardFile.read()
+    data = rewardFile.read().splitlines()
     
-    reward = data.split(",")
+    for dat in data:
+        reward.append(dat.split(","))
     
     return reward
 
@@ -204,17 +205,17 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
 
     if optimize == "True":
         for t in range(horizon):
-            for var in reward:
+            for var, weight in reward:
                 if var in A or var[1:] in A:
                     if var[0] == "~":
-                        objcoefs[colnames.index(str(x[(var[1:],t)]))] = 1.0
+                        objcoefs[colnames.index(str(x[(var[1:],t)]))] = float(weight)
                     else:
-                        objcoefs[colnames.index(str(x[(var,t)]))] = -1.0
+                        objcoefs[colnames.index(str(x[(var,t)]))] = -1.0*float(weight)
                 else:
                     if var[0] == "~":
-                        objcoefs[colnames.index(str(y[(var[1:],t+1)]))] = 1.0
+                        objcoefs[colnames.index(str(y[(var[1:],t+1)]))] = float(weight)
                     else:
-                        objcoefs[colnames.index(str(y[(var,t+1)]))] = -1.0
+                        objcoefs[colnames.index(str(y[(var,t+1)]))] = -1.0*float(weight)
         c.variables.add(obj=objcoefs, types=vartypes, names=colnames)
     else:
         c.variables.add(types=vartypes, names=colnames)
