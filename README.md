@@ -41,9 +41,9 @@ i) Input files in translation folder only accepts pseudo-boolean constraints/exp
 
 ## Summary
 
-| Action Space | State Space  | DNN Type | Global Constraints  | Reward Optimization | Known Transition Functions |
-| :-: | :-: | :-: | :-: | :-: | :-: | 
-| Discrete and Continuous (upto fixed-bit precision) | Discrete and Continuous (upto fixed-bit precision) | Fully-connected BNNs | Yes, Piecewise Linear | Yes, Piecewise Linear | Yes, Piecewise Linear |
+| Action Space | State Space  | DNN Type | Global Constraints  | Reward Optimization | Known Transition Functions | Optimality Guarantee w.r.t. DNN |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | 
+| Discrete and Continuous (upto fixed-bit precision) | Discrete and Continuous (upto fixed-bit precision) | Fully-connected BNNs | Yes, Piecewise Linear | Yes, Piecewise Linear | Yes, Piecewise Linear | Yes |
 
 ## Citation
 
