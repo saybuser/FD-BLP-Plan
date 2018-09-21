@@ -1,0 +1,5 @@
+running[$c1],==,1
+running[$c2],==,1
+running[$c3],==,1
+running[$c4],==,1
+reboot[$c1],reboot[$c2],reboot[$c3],reboot[$c4],<=,2
