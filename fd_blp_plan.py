@@ -112,6 +112,7 @@ def readVariables(directory):
     S = []
     SData = []
     SLabel = []
+    Aux = []
     
     variablesFile = open(directory,"r")
     data = variablesFile.read().splitlines()
@@ -125,7 +126,7 @@ def readVariables(directory):
                     A.append(var.replace("action_data: ",""))
                 else:
                     A.append(var.replace("action: ",""))
-            else:
+            elif "state:" in var or "state_data:" in var or "state_label:" in var or "state_data_label:" in var:
                 if "_data:" in var or "_data_label:" in var:
                     if "_label:" in var:
                         SData.append(var.replace("state_data_label: ",""))
@@ -140,8 +141,10 @@ def readVariables(directory):
                         S.append(var.replace("state_label: ",""))
                     else:
                         S.append(var.replace("state: ",""))
+            else:
+                Aux.append(var.replace("auxiliary: ",""))
 
-    return A, AData, S, SData, SLabel
+    return A, AData, S, SData, SLabel, Aux
 
 def encode_fd_blp_plan(domain, instance, horizon, optimize):
     
@@ -152,7 +155,7 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
     initial = readInitial("./translation/initial_"+domain+"_"+instance+".txt")
     goals = readGoals("./translation/goals_"+domain+"_"+instance+".txt")
     constraints = readConstraints("./translation/constraints_"+domain+"_"+instance+".txt")
-    A, AData, S, SData, SLabel = readVariables("./translation/pvariables_"+domain+"_"+instance+".txt")
+    A, AData, S, SData, SLabel, Aux = readVariables("./translation/pvariables_"+domain+"_"+instance+".txt")
     
     nHiddenLayers = len(layers)-1
     VARINDEX = 0
@@ -192,6 +195,15 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
             vartypes += "B"
             VARINDEX += 1
 
+    # Create vars for each auxilary variable aux, time step t
+    v = {}
+    for aux in Aux:
+        for t in range(horizon+1):
+            v[(aux,t)] = VARINDEX
+            colnames.append(str(v[(aux,t)]))
+            vartypes += "B"
+            VARINDEX += 1
+
     # Create vars for each activation node z at depth d, width w, time step t
     z = {}
     for t in range(horizon):
@@ -211,23 +223,29 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
                         objcoefs[colnames.index(str(x[(var[1:],t)]))] = float(weight)
                     else:
                         objcoefs[colnames.index(str(x[(var,t)]))] = -1.0*float(weight)
-                else:
+                elif var in S or var[1:] in S:
                     if var[0] == "~":
                         objcoefs[colnames.index(str(y[(var[1:],t+1)]))] = float(weight)
                     else:
                         objcoefs[colnames.index(str(y[(var,t+1)]))] = -1.0*float(weight)
+                else:
+                    if var[0] == "~":
+                        objcoefs[colnames.index(str(v[(var[1:],t+1)]))] = float(weight)
+                    else:
+                        objcoefs[colnames.index(str(v[(var,t+1)]))] = -1.0*float(weight)
         c.variables.add(obj=objcoefs, types=vartypes, names=colnames)
     else:
         c.variables.add(types=vartypes, names=colnames)
 
     # Constraints
+    negA = ["~"+a for a in A]
     for t in range(horizon+1):
         for constraint in constraints:
             variables = constraint[:-2]
             literals = []
             coefs = []
             RHS = 0
-            if set(A).isdisjoint(variables) or t < horizon: # for the last time step, only consider constraints that include states variables-only
+            if (set(A).isdisjoint(variables) and set(negA).isdisjoint(variables)) or t < horizon: # for the last time step, only consider constraints that include states variables-only
                 for var in variables:
                     if var in A or var[1:] in A:
                         if var[0] == "~":
@@ -237,13 +255,21 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
                         else:
                             literals.append(x[(var,t)])
                             coefs.append(1.0)
-                    else:
+                    elif var in S or var[1:] in S:
                         if var[0] == "~":
                             literals.append(y[(var[1:],t)])
                             coefs.append(-1.0)
                             RHS -= 1
                         else:
                             literals.append(y[(var,t)])
+                            coefs.append(1.0)
+                    else:
+                        if var[0] == "~":
+                            literals.append(v[(var[1:],t)])
+                            coefs.append(-1.0)
+                            RHS -= 1
+                        else:
+                            literals.append(v[(var,t)])
                             coefs.append(1.0)
                 RHS += int(constraint[len(constraint)-1])
                 if "<=" == constraint[len(constraint)-2]:
@@ -271,6 +297,14 @@ def encode_fd_blp_plan(domain, instance, horizon, optimize):
                         RHS -= 1
                     else:
                         literals.append(x[(var,t)])
+                        coefs.append(1.0)
+                elif var in Aux or var[1:] in Aux:
+                    if var[0] == "~":
+                        literals.append(v[(var[1:],t)])
+                        coefs.append(-1.0)
+                        RHS -= 1
+                    else:
+                        literals.append(v[(var,t)])
                         coefs.append(1.0)
                 else:
                     if var[0] == "~":
@@ -539,5 +573,4 @@ if __name__ == '__main__':
     #encode_fd_blp_plan("inventory", "1", 7, "True")
     #encode_fd_blp_plan("inventory", "2", 8, "True")
 
-    #encode_fd_blp_plan("sysadmin", "4", 4, "False")
     #encode_fd_blp_plan("sysadmin", "5", 4, "False")
