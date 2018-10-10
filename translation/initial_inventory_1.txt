@@ -1,4 +1,4 @@
-threshold_met[$c1],==,0
+threshold_met[$c1],==,1
 quant_bit_3[$c1],==,0
 quant_bit_2[$c1],==,0
 quant_bit_1[$c1],==,0
