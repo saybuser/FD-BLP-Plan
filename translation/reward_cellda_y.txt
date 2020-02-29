@@ -1,0 +1,4 @@
+move-right,-1
+move-up,-1
+move-down,-1
+move-left,-1

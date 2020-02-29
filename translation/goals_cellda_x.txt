@@ -1,0 +1,6 @@
+cellda-loc_bit_1[$x],==,1
+cellda-loc_bit_0[$x],==,1
+cellda-loc_bit_1[$y],==,0
+cellda-loc_bit_0[$y],==,0
+cellda-alive,==,1
+has-key,==,1
